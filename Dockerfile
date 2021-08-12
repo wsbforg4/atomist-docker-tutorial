@@ -5,6 +5,6 @@ WORKDIR /app
 COPY package* .
 COPY version.txt .
 COPY index.js .
-RUN npm ci
+RUN npm install
 
 CMD ["node", "index.js"]
