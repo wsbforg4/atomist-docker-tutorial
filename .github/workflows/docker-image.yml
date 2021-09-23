@@ -10,6 +10,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Get Image Tag Name
+      shell: bash
+      run: echo "IMAGE_TAG=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      id: get_tag_name    
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
@@ -21,7 +25,7 @@ jobs:
         context: ./
         push: true
         file: ./Dockerfile
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY || github.event.repository.name }}:${{ github.ref }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY || github.event.repository.name }}:${{ env.IMAGE_TAG }}
         labels: |
           org.opencontainers.image.revision=${{ github.sha }}
           org.opencontainers.image.source=Dockerfile
