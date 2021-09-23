@@ -21,7 +21,7 @@ jobs:
         context: ./
         push: true
         file: ./Dockerfile
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.ref }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY || github.event.repository.name }}:${{ github.ref }}
         labels: |
           org.opencontainers.image.revision=${{ github.sha }}
           org.opencontainers.image.source=Dockerfile
